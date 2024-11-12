@@ -26,7 +26,7 @@ class RolePermissionNameRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => 'O nome da função é obrigatório.',

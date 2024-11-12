@@ -27,7 +27,7 @@ class UserPermissionRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'user_id.required' => 'O campo de ID do usuário é obrigatório.',

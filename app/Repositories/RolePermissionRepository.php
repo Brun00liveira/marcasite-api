@@ -20,27 +20,27 @@ class RolePermissionRepository
     }
 
 
-    public function createRole(array $data)
+    public function createRole(array $data): Role
     {
         return $this->role->create($data);
     }
 
-    public function createPermission(array $data)
+    public function createPermission(array $data): Permission
     {
         return $this->permission->create($data);
     }
 
-    public function assignPermissionToRole(Role $role, string $permission)
+    public function assignPermissionToRole(Role $role, string $permission): mixed
     {
         return $role->givePermissionTo($permission);
     }
 
-    public function getRoleByName(string $name)
+    public function getRoleByName(string $name): ?Role
     {
         return $this->role->findByName($name, 'api');
     }
 
-    public function getRoleByNameAndGuard(string $name, array $guards)
+    public function getRoleByNameAndGuard(string $name, array $guards): ?Role
     {
 
         return $this->role->where('name', $name)
@@ -48,7 +48,7 @@ class RolePermissionRepository
             ->first();
     }
 
-    public function getPermissionByNameAndGuard(string $name, array $guards)
+    public function getPermissionByNameAndGuard(string $name, array $guards): ?Role
     {
         return $this->permission->where('name', $name)
             ->whereIn('guard_name', $guards)
@@ -56,7 +56,7 @@ class RolePermissionRepository
     }
 
 
-    public function getUserById(int $userId)
+    public function getUserById(int $userId): ?User
     {
         return $this->user->find($userId);
     }

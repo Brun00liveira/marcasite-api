@@ -6,26 +6,25 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
-use App\Services\UserService;
-use App\Models\User;
+use App\Http\Resources\UserResource;
+use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    protected $userService;
+    protected $authService;
 
-    public function __construct(UserService $userService)
+    public function __construct(AuthService $authService)
     {
-        $this->userService = $userService;
+        $this->authService = $authService;
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
 
-        $user = $this->userService->login($credentials);
+        $user = $this->authService->login($credentials);
 
         if (!$user) {
             return response()->json(['message' => 'Credenciais inválidas'], 401);
@@ -33,42 +32,48 @@ class AuthController extends Controller
 
         $token = $user->createToken('Token')->plainTextToken;
 
-        return response()->json(['user' => $user, 'token' => $token], 200);
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token
+        ], 200);
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $user = $this->userService->create($request->all());
+        $user = $this->authService->create($request->all());
 
         $token = $user->createToken('Token')->plainTextToken;
 
-        return response()->json(['user' => $user, 'token' => $token], 201);
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token
+        ], 200);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        if ($this->userService->logout($user)) {
+        if ($this->authService->logout($user)) {
             return response()->json(['message' => 'Logout realizado com sucesso'], 200);
         }
 
         return response()->json(['message' => 'Falha ao realizar logout'], 500);
     }
 
-    public function sendResetLinkEmail(Request $request)
+    public function sendResetLinkEmail(Request $request): JsonResponse
     {
 
         $request->validate(['email' => 'required|email']);
 
-        $response = $this->userService->sendResetLink($request->only('email'));
+        $response = $this->authService->sendResetLink($request->only('email'));
 
         return response()->json(['message' => $response['message']], $response['status']);
     }
 
-    public function reset(ResetPasswordRequest $request)
+    public function reset(ResetPasswordRequest $request): JsonResponse
     {
-        $response = $this->userService->resetPassword(
+        $response = $this->authService->resetPassword(
             $request->only('email', 'password', 'password_confirmation', 'token')
         );
 

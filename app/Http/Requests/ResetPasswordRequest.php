@@ -19,7 +19,7 @@ class ResetPasswordRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
 
@@ -31,7 +31,7 @@ class ResetPasswordRequest extends FormRequest
     /**
      * Mensagens personalizadas para validação.
      */
-    public function messages()
+    public function messages(): array
     {
         return [
 

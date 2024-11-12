@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\RolePermissionRepository;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Contracts\Role;
 
 class RolePermissionService
 {
@@ -15,17 +15,17 @@ class RolePermissionService
         $this->rolePermissionRepository = $rolePermissionRepository;
     }
 
-    public function createRole(array $data)
+    public function createRole(array $data): Role
     {
         return $this->rolePermissionRepository->createRole($data);
     }
 
-    public function createPermission(array $data)
+    public function createPermission(array $data): Permission
     {
         return $this->rolePermissionRepository->createPermission($data);
     }
 
-    public function assignPermissionToRole(string $roleName, string $permissionName)
+    public function assignPermissionToRole(string $roleName, string $permissionName): ?bool
     {
         $role = $this->rolePermissionRepository->getRoleByName($roleName);
 
@@ -35,7 +35,7 @@ class RolePermissionService
         return null;
     }
 
-    public function assignRoleToUser(int $userId, string $roleName)
+    public function assignRoleToUser(int $userId, string $roleName): bool
     {
 
         $user = $this->rolePermissionRepository->getUserById($userId);
@@ -48,7 +48,7 @@ class RolePermissionService
         return false;
     }
 
-    public function assignPermissionToUser(int $userId, string $permissionName)
+    public function assignPermissionToUser(int $userId, string $permissionName): bool
     {
         $user = $this->rolePermissionRepository->getUserById($userId);
         $permission = $this->rolePermissionRepository->getPermissionByNameAndGuard($permissionName, ['web', 'api']);
