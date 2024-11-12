@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,20 +19,27 @@ class LoginRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+
+            'email' => 'required|email',
+            'password' => 'required|min:6|confirmed',
         ];
     }
-    
+
+    /**
+     * Mensagens personalizadas para validação.
+     */
     public function messages()
     {
         return [
+
             'email.required' => 'O e-mail é obrigatório.',
-            'email.email' => 'O e-mail deve ser válido.',
+            'email.email' => 'Por favor, insira um e-mail válido.',
             'password.required' => 'A senha é obrigatória.',
+            'password.min' => 'A senha deve ter pelo menos 6 caracteres.',
+            'password.confirmed' => 'As senhas não coincidem.',
         ];
     }
 }
