@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('cpf')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_code')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();;
             $table->string('phone')->unique();
             $table->string('address')->nullable();
             $table->string('city')->nullable();

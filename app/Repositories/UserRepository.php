@@ -29,16 +29,15 @@ class UserRepository
         return $this->user->create($data);
     }
 
-    public function update(int $id, array $data): User
+    public function update(User $user, array $data): User
     {
-        $user = $this->user->findOrFail($id);
+
         $user->update($data);
         return $user;
     }
 
-    public function delete(int $id): bool
+    public function delete(User $user): bool
     {
-        $user = $this->user->findOrFail($id);
         return $user->delete();
     }
 }
