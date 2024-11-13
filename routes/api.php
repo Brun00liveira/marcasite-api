@@ -8,7 +8,8 @@ use App\Http\Controllers\{
     UserController,
     RolePermissionController,
     CourseController,
-    CategoryController
+    CategoryController,
+    EnrollmentController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -36,38 +37,20 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
 
-    Route::prefix('courses')->group(function () {
-        Route::post('', [CourseController::class, 'store']);
-        Route::put('/{id}', [CourseController::class, 'update']);
-        Route::delete('{id}', [CourseController::class, 'destroy']);
-    });
-
-    Route::prefix('categories')->group(function () {
-        Route::post('/', [CategoryController::class, 'store']);
-        Route::put('/{id}', [CategoryController::class, 'update']);
-        Route::delete('/{id}', [CategoryController::class, 'destroy']);
-    });
+    Route::resources([
+        'courses' => CourseController::class,
+        'categories' => CategoryController::class,
+        'enrollments' => EnrollmentController::class,
+    ]);
 });
 
 Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
+    Route::resource('users', UserController::class)->except(['destroy']);
+    Route::post('/users/updatePhoto/{id}', [UserController::class, 'updatePhoto']);
 
-    Route::prefix('users')->group(function () {
-        Route::get('', [UserController::class, 'index']);
-        Route::get('/{id}', [UserController::class, 'show']);
-        Route::post('', [UserController::class, 'store']);
-        Route::put('/{id}', [UserController::class, 'update']);
-        Route::post('/updatePhoto/{id}', [UserController::class, 'updatePhoto']);
-    });
+    Route::resource('courses', CourseController::class)->except(['destroy']);
+    Route::post('/courses/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
 
-    Route::prefix('courses')->group(function () {
-        Route::get('/', [CourseController::class, 'index']);
-        Route::get('/{id}', [CourseController::class, 'show']);
-        Route::put('/{id}', [CourseController::class, 'update']);
-        Route::post('/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
-    });
-
-    Route::prefix('categories')->group(function () {
-        Route::get('/', [CategoryController::class, 'index']);
-        Route::get('/{id}', [CategoryController::class, 'show']);
-    });
+    Route::resource('categories', CategoryController::class)->only(['index', 'show']);
+    Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
 });

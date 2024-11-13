@@ -21,7 +21,7 @@ class UserService
         return $this->userRepository->getAll();
     }
 
-    public function getUserById($id): ?User
+    public function getUserById(int $id): ?User
     {
         return $this->userRepository->findById($id);
     }
@@ -31,14 +31,14 @@ class UserService
         return $this->userRepository->create($data);
     }
 
-    public function updateUser($id, array $data): User
+    public function updateUser(int $id, array $data): User
     {
         $user = $this->userRepository->findById($id);
 
         return $this->userRepository->update($user, $data);
     }
 
-    public function deleteUser($id): bool
+    public function deleteUser(int $id): bool
     {
         $user = $this->userRepository->findById($id);
         return $this->userRepository->delete($user);

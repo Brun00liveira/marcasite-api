@@ -21,7 +21,7 @@ class CategoryService
         return $this->categoryRepository->getAll();
     }
 
-    public function getUserById($id): ?Category
+    public function getUserById(int $id): ?Category
     {
         return $this->categoryRepository->findById($id);
     }
@@ -31,7 +31,7 @@ class CategoryService
         return $this->categoryRepository->create($data);
     }
 
-    public function updateUser($id, array $data): Category
+    public function updateUser(int $id, array $data): Category
     {
 
         $user = $this->categoryRepository->findById($id);
@@ -39,7 +39,7 @@ class CategoryService
         return $this->categoryRepository->update($user, $data);
     }
 
-    public function deleteUser($id): bool
+    public function deleteUser(int $id): bool
     {
         $user = $this->categoryRepository->findById($id);
         return $this->categoryRepository->delete($user);
