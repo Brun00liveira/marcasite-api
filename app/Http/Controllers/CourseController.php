@@ -82,14 +82,8 @@ class CourseController extends Controller
             "photo" => $path
         ]);
 
-        return new StandardResource(
-            [
-                'message' => 'Curso atualizado com sucesso',
-                'data' => $course
-            ]
-        );
+        return new StandardResource($course);
     }
-
 
     public function destroy($id): JsonResponse
     {

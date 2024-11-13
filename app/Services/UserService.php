@@ -34,9 +34,7 @@ class UserService
     public function updateUser($id, array $data): User
     {
         $user = $this->userRepository->findById($id);
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }
+
         return $this->userRepository->update($user, $data);
     }
 

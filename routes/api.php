@@ -39,7 +39,6 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('', [CourseController::class, 'store']);
         Route::put('/{id}', [CourseController::class, 'update']);
         Route::delete('{id}', [CourseController::class, 'destroy']);
-        Route::post('/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
     });
 });
 
@@ -50,11 +49,13 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
         Route::get('/{id}', [UserController::class, 'show']);
         Route::post('', [UserController::class, 'store']);
         Route::put('/{id}', [UserController::class, 'update']);
+        Route::post('/updatePhoto/{id}', [UserController::class, 'updatePhoto']);
     });
 
     Route::prefix('courses')->group(function () {
         Route::get('/', [CourseController::class, 'index']);
         Route::get('/{id}', [CourseController::class, 'show']);
         Route::put('/{id}', [CourseController::class, 'update']);
+        Route::post('/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
     });
 });

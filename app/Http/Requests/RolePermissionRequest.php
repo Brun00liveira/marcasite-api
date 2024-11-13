@@ -32,6 +32,7 @@ class RolePermissionRequest extends FormRequest
         return [
             'role.required' => 'O campo de função é obrigatório.',
             'role.exists' => 'A função fornecida não existe.',
+
             'permission.required' => 'O campo de permissão é obrigatório.',
             'permission.exists' => 'A permissão fornecida não existe.',
         ];

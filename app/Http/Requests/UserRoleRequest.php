@@ -32,6 +32,7 @@ class UserRoleRequest extends FormRequest
         return [
             'user_id.required' => 'O campo de ID do usuário é obrigatório.',
             'user_id.exists' => 'O usuário com o ID fornecido não existe.',
+
             'role.required' => 'O campo de função é obrigatório.',
             'role.exists' => 'A função fornecida não existe.',
         ];

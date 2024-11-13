@@ -35,8 +35,11 @@ class CourseRequest extends FormRequest
             'title.required' => 'O título do curso é obrigatório.',
             'title.string' => 'O título deve ser uma string.',
             'title.max' => 'O título deve ter no máximo 255 caracteres.',
+
             'description.required' => 'A descrição é obrigatória.',
+
             'price.required' => 'O preço do curso é obrigatório.',
+
             'photo.image' => 'A foto deve ser uma imagem.',
             'photo.max' => 'A foto não pode ultrapassar 2MB.',
         ];

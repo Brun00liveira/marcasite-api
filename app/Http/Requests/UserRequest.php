@@ -25,6 +25,7 @@ class UserRequest extends FormRequest
             'country' => 'nullable|string|max:255',
             'cep' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
@@ -60,6 +61,9 @@ class UserRequest extends FormRequest
 
             'phone.required' => 'O número de telefone é obrigatório.',
             'phone.regex' => 'O número de telefone deve ser válido (apenas números, com 10 a 15 dígitos e pode incluir o símbolo de + no início).',
+
+            'photo.image' => 'A foto deve ser uma imagem.',
+            'photo.max' => 'A foto não pode ultrapassar 2MB.',
         ];
     }
 }

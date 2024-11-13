@@ -32,9 +32,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'O nome é obrigatório.',
+
             'email.required' => 'O e-mail é obrigatório.',
             'email.email' => 'O e-mail deve ser válido.',
             'email.unique' => 'Este e-mail já está em uso.',
+
             'password.required' => 'A senha é obrigatória.',
             'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
             'password.confirmed' => 'As senhas não coincidem.',
