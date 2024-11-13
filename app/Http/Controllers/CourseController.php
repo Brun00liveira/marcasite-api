@@ -20,11 +20,16 @@ class CourseController extends Controller
         $this->courseService = $courseService;
     }
 
-    public function index(): StandardResource
+    public function index(Request $request): StandardResource
     {
-        $courses = $this->courseService->getAllCourses();
+        $perPage = $request->query('perPage', 10);
+        $page = $request->query('page', 1);
+
+        $courses = $this->courseService->getAllCourses($perPage, $page);
+
         return new StandardResource($courses);
     }
+
 
     public function show($id): StandardResource
     {

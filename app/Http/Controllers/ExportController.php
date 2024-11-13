@@ -6,7 +6,9 @@ use App\Exports\UsersExports;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ExportController extends Controller
 {
@@ -17,16 +19,23 @@ class ExportController extends Controller
         $this->userService = $userService;
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        $users = $this->userService->getAllUsers();
+        $perPage = $request->query('perPage', 10);
+        $page = $request->query('page', 1);
+
+        $users = $this->userService->getAllUsers($perPage, $page);
+
 
         return Excel::download(new UsersExports($users), 'users.xlsx');
     }
 
-    public function exportPdf()
+    public function exportPdf(Request $request)
     {
-        $users = $this->userService->getAllUsers();
+        $perPage = $request->query('perPage', 10);
+        $page = $request->query('page', 1);
+
+        $users = $this->userService->getAllUsers($perPage, $page);
 
         $pdf = Pdf::loadView('pdf.exemplo', compact('users'));
 

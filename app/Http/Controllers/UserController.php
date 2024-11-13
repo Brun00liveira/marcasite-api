@@ -20,9 +20,13 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function index(): StandardResource
+    public function index(Request $request): StandardResource
     {
-        $users = $this->userService->getAllUsers();
+        $perPage = $request->query('perPage', 10);
+        $page = $request->query('page', 1);
+
+        $users = $this->userService->getAllUsers($perPage, $page);
+
         return new StandardResource($users);
     }
 

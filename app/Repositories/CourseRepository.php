@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CourseRepository
 {
@@ -14,9 +15,9 @@ class CourseRepository
         $this->course = $course;
     }
 
-    public function getAll(): Collection
+    public function getAll(int $perPage = 10): LengthAwarePaginator
     {
-        return $this->course->all();
+        return $this->course->paginate($perPage);
     }
 
     public function findById($id): Course

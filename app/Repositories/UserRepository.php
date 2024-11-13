@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
 {
@@ -14,10 +15,11 @@ class UserRepository
         $this->user = $user;
     }
 
-    public function getAll(): Collection
+    public function getAll(int $perPage = 10): LengthAwarePaginator
     {
-        return $this->user->all();
+        return $this->user->paginate($perPage);
     }
+
 
     public function findById($id): User
     {
