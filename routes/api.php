@@ -9,7 +9,8 @@ use App\Http\Controllers\{
     RolePermissionController,
     CourseController,
     CategoryController,
-    EnrollmentController
+    EnrollmentController,
+    ExportController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -54,3 +55,5 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
     Route::resource('categories', CategoryController::class)->only(['index', 'show']);
     Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
 });
+Route::get('/export', [ExportController::class, 'export']);
+Route::get('/export-pdf', [ExportController::class, 'exportPdf']);
