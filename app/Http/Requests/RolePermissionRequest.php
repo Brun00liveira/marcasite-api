@@ -22,8 +22,8 @@ class RolePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => 'required|string|exists:roles,name', // O nome da função precisa ser existente na tabela `roles`
-            'permission' => 'required|string|exists:permissions,name', // O nome da permissão precisa ser existente na tabela `permissions`
+            'role' => 'required|string|exists:roles,name',
+            'permission' => 'required|string|exists:permissions,name',
         ];
     }
 

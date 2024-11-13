@@ -7,7 +7,8 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\{
     UserController,
     RolePermissionController,
-    CourseController
+    CourseController,
+    CategoryController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,12 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::put('/{id}', [CourseController::class, 'update']);
         Route::delete('{id}', [CourseController::class, 'destroy']);
     });
+
+    Route::prefix('categories')->group(function () {
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::put('/{id}', [CategoryController::class, 'update']);
+        Route::delete('/{id}', [CategoryController::class, 'destroy']);
+    });
 });
 
 Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
@@ -57,5 +64,10 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
         Route::get('/{id}', [CourseController::class, 'show']);
         Route::put('/{id}', [CourseController::class, 'update']);
         Route::post('/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::get('/{id}', [CategoryController::class, 'show']);
     });
 });

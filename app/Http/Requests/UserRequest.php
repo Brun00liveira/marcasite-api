@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'cep' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'is_active' => 'nullable'
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {

@@ -18,6 +18,7 @@ class CourseRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'is_active' => 'nullable'
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
