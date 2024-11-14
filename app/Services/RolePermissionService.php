@@ -35,7 +35,7 @@ class RolePermissionService
         return null;
     }
 
-    public function assignRoleToUser(int $userId, string $roleName): bool
+    public function assignRoleToUser(int $userId, string $roleName): ?bool
     {
 
         $user = $this->rolePermissionRepository->getUserById($userId);

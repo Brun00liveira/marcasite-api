@@ -48,7 +48,7 @@ class RolePermissionRepository
             ->first();
     }
 
-    public function getPermissionByNameAndGuard(string $name, array $guards): ?Role
+    public function getPermissionByNameAndGuard(string $name, array $guards): ?Permission
     {
         return $this->permission->where('name', $name)
             ->whereIn('guard_name', $guards)
