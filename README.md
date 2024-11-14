@@ -51,7 +51,12 @@ As demais alterações fiz direto nos diretórios da Config como por exemplo: FI
 
 <strong><h3>4. Migrations e seeders </h3></strong>
 php artisan migrate </br>
-php artisan db:seed
+php artisan db:seed </br>
+
+Após rodar o seed, um usuário administrador será criado! <br/>
+
+<strong>Login:</strong> admin@marcacurso.com 
+<strong>Senha:</strong> SenhaForte123
 
 
 
