@@ -17,18 +17,24 @@ class UserWithRolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         // Criar a Permissão
-        $permission = Permission::firstOrCreate(['name' => 'create courses']);
+        $permission = Permission::firstOrCreate([
+            'name' => 'create couyrses',
+            'guard_name' => 'api'
+        ]);
 
-        // Criar a Role e associar a permissão
-        $role = Role::firstOrCreate(['name' => 'admin']);
+        // Criar a Role com o guard 'api' e associar a permissão
+        $role = Role::firstOrCreate([
+            'name' => 'adminy',
+            'guard_name' => 'api'
+        ]);
         $role->givePermissionTo($permission);
 
         // Criar o Usuário e associar a Role
         $user = User::firstOrCreate(
-            ['email' => 'brunobromo321@gmail.com'],
+            ['email' => 'brunobyromo321@gmail.com'],
             [
                 'name' => 'talia',
-                'phone' => '129911445756',
+                'phone' => '129921445756',
                 'password' => Hash::make('SenhaForte123')
             ]
         );
