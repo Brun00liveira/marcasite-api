@@ -25,7 +25,7 @@ class RolePermissionService
         return $this->rolePermissionRepository->createPermission($data);
     }
 
-    public function assignPermissionToRole(string $roleName, string $permissionName): ?bool
+    public function assignPermissionToRole(string $roleName, string $permissionName): ?Role
     {
         $role = $this->rolePermissionRepository->getRoleByName($roleName);
 

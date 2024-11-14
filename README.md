@@ -49,6 +49,15 @@ Conexão com banco Mysql </br>
 Ferramenta de teste de envio de e-mails (Se não tiver uma configurada eu mando os dados do meu STMP do Gmail, mas com Mailtrap é bem traquilo de configurar)</br>
 As demais alterações fiz direto nos diretórios da Config como por exemplo: FILESYSTEM_DISK</br>
 
+<strong><h3>4. Migrations e seeders </h3></strong>
+php artisan migrate </br>
+php artisan db:seed
+
+
+
+
+
+
 
 
 

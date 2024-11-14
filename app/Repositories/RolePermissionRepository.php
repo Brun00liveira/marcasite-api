@@ -30,7 +30,7 @@ class RolePermissionRepository
         return $this->permission->create($data);
     }
 
-    public function assignPermissionToRole(Role $role, string $permission): mixed
+    public function assignPermissionToRole(Role $role, string $permission): Role
     {
         return $role->givePermissionTo($permission);
     }

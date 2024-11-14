@@ -40,6 +40,7 @@ class RolePermissionController extends Controller
 
     public function assignPermissionToRole(RolePermissionRequest $request): JsonResponse
     {
+
         $result = $this->rolePermissionService->assignPermissionToRole($request->role, $request->permission);
 
         if ($result) {
