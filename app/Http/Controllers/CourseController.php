@@ -23,13 +23,11 @@ class CourseController extends Controller
     public function index(Request $request): StandardResource
     {
         $perPage = $request->query('perPage', 10);
-        $page = $request->query('page', 1);
 
-        $courses = $this->courseService->getAllCourses($perPage, $page);
+        $courses = $this->courseService->getAllCourses($perPage, $request->all());
 
         return new StandardResource($courses);
     }
-
 
     public function show($id): StandardResource
     {

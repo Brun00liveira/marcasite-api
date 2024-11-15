@@ -15,10 +15,24 @@ class CourseRepository
         $this->course = $course;
     }
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator
+    public function getAll(int $perPage = 10, $query = null): LengthAwarePaginator
     {
-        return $this->course->paginate($perPage);
+        // Inicia a consulta
+        $dataQuery = $this->course->newQuery();
+
+        // Aplica os filtros
+        if ($query && isset($query['name'])) {
+            $dataQuery->where('title', 'like', '%' . $query['name'] . '%');
+        }
+
+        if ($query && isset($query['category_id'])) {
+            $dataQuery->where('category_id', 'like', '%' . $query['category_id'] . '%');
+        }
+
+        // Retorna a paginação com os filtros aplicados
+        return $dataQuery->paginate($perPage);
     }
+
 
     public function findById($id): Course
     {
