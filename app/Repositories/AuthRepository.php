@@ -22,12 +22,16 @@ class AuthRepository
 
     public function create(array $data): User
     {
-        return $this->user->create([
+        $data = $this->user->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $user = $this->user->where('email', $data['email'])->first();
+
+        return $user;
     }
 
     public function login(array $credentials): ?User

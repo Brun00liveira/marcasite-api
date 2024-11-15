@@ -39,23 +39,26 @@ class CourseController extends Controller
 
     public function store(CourseRequest $request): StandardResource
     {
-
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
 
             $path = $request->file('photo')->store('courses', 'public');
+
+            $url = Storage::url($path);
         } else {
-            $path = null;
+            $url = null;
         }
 
         $course = $this->courseService->createCourse([
             'title' => $request->validated()['title'],
             'description' => $request->validated()['description'],
             'price' => $request->validated()['price'],
-            'photo' => $path,
+            'photo' => $url,
         ]);
 
         return new StandardResource($course);
     }
+
+
 
     public function update(CourseRequest $request, $id): StandardResource
     {
@@ -71,7 +74,7 @@ class CourseController extends Controller
 
         if ($course && $course->photo) {
             $oldPhotoPath = $course->photo;
-
+            dd($oldPhotoPath);
             if (Storage::exists($oldPhotoPath)) {
                 Storage::delete($oldPhotoPath);
             }
