@@ -25,6 +25,7 @@ class ResetPasswordRequest extends FormRequest
 
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed',
+            'token' => 'required'
         ];
     }
 
@@ -41,6 +42,8 @@ class ResetPasswordRequest extends FormRequest
             'password.required' => 'A senha é obrigatória.',
             'password.min' => 'A senha deve ter pelo menos 6 caracteres.',
             'password.confirmed' => 'As senhas não coincidem.',
+
+            'token.required' => 'O token é obrigatório.',
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -24,18 +25,21 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        $user = $this->authService->login($credentials);
+        try {
+            // Chama o método de login da AuthService
+            $user = $this->authService->login($credentials);
 
-        if (!$user) {
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
+            // Se o login for bem-sucedido, cria o token
+            $token = $user->createToken('Token')->plainTextToken;
+
+            return response()->json([
+                'user' => new UserResource($user),
+                'token' => $token
+            ], 200);
+        } catch (AuthenticationException $e) {
+            // Retorna um erro com mensagem personalizada
+            return response()->json(['message' => $e->getMessage()], 401);
         }
-
-        $token = $user->createToken('Token')->plainTextToken;
-
-        return response()->json([
-            'user' => new UserResource($user),
-            'token' => $token
-        ], 200);
     }
 
     public function register(RegisterRequest $request): JsonResponse

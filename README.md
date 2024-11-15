@@ -55,7 +55,7 @@ php artisan db:seed </br>
 
 Após rodar o seed, um usuário administrador será criado! <br/>
 
-<strong>Login:</strong> admin@marcacurso.com 
+<strong>Login:</strong> admin@marcacurso.com <br/>
 <strong>Senha:</strong> SenhaForte123
 
 

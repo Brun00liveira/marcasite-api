@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Notifications\ResetPasswordNotification;
 use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\Password;
 
@@ -32,15 +33,10 @@ class AuthService
 
     public function sendResetLink(array $data)
     {
-
-        $status = $this->authRepository->sendResetLink($data);
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return ['message' => 'Link de redefinição de senha enviado para seu email.', 'status' => 200];
-        }
-
-        return ['message' => 'Não foi possível enviar o link de redefinição.', 'status' => 500];
+        $response = $this->authRepository->sendResetLink($data);
+        return $response;
     }
+
 
     public function resetPassword(array $data)
     {

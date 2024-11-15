@@ -24,6 +24,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|unique:users|regex:/^\d{2}\d{9}$/',
             'password' => 'required|string|min:8|confirmed',
         ];
     }
@@ -37,9 +38,22 @@ class RegisterRequest extends FormRequest
             'email.email' => 'O e-mail deve ser válido.',
             'email.unique' => 'Este e-mail já está em uso.',
 
+            'phone.required' => 'O número de telefone é obrigatório.',
+            'phone.regex' => 'O número de telefone deve estar no formato DDD + 9 dígitos (exemplo: 419911445756).',
+            'phone.unique' => 'Este telefone já está em uso.',
+
             'password.required' => 'A senha é obrigatória.',
             'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
             'password.confirmed' => 'As senhas não coincidem.',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('phone')) {
+            $this->merge([
+                'phone' => preg_replace('/\D/', '', $this->phone),
+            ]);
+        }
     }
 }
