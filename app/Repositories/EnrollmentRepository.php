@@ -18,7 +18,7 @@ class EnrollmentRepository
 
     public function getAll(): Collection
     {
-        return $this->enrollment->all();
+        return $this->enrollment->get();
     }
 
     public function findById($id): Enrollment
@@ -44,7 +44,10 @@ class EnrollmentRepository
 
     public function getByUserId(): Collection
     {
-        return $this->enrollment->where('user_id', Auth::user()->id)->get();
+        return $this->enrollment
+            ->where('user_id', Auth::id())
+            ->with(['user', 'course'])
+            ->get();
     }
 
     public function getByCourseId($courseId): Collection

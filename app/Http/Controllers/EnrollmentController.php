@@ -52,4 +52,10 @@ class EnrollmentController extends Controller
         $this->enrollmentService->deleteEnrollment($id);
         return response()->json(['message' => 'Inscrição excluída com sucesso'], 200);
     }
+
+    public function findByUserId(): StandardResource
+    {
+        $enrollment = $this->enrollmentService->getEnrollmentsByUserId();
+        return new StandardResource($enrollment);
+    }
 }

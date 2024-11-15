@@ -43,9 +43,9 @@ class EnrollmentService
         return $this->enrollmentRepository->delete($user);
     }
 
-    public function getEnrollmentsByUserId(int $userId): Collection
+    public function getEnrollmentsByUserId(): Collection
     {
-        return $this->enrollmentRepository->getByUserId($userId);
+        return $this->enrollmentRepository->getByUserId();
     }
 
     public function getEnrollmentsByCourseId(int $courseId): Collection
