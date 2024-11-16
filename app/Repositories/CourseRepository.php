@@ -15,21 +15,26 @@ class CourseRepository
         $this->course = $course;
     }
 
-    public function getAll(int $perPage = 10, $query = null): LengthAwarePaginator
+    public function getAll(int $perPage = 6, $query = null): LengthAwarePaginator
     {
-        // Inicia a consulta
+
         $dataQuery = $this->course->newQuery();
 
-        // Aplica os filtros
         if ($query && isset($query['name'])) {
             $dataQuery->where('title', 'like', '%' . $query['name'] . '%');
         }
 
         if ($query && isset($query['category_id'])) {
-            $dataQuery->where('category_id', 'like', '%' . $query['category_id'] . '%');
+
+            $categoryIds = is_array($query['category_id']) ? $query['category_id'] : explode(',', $query['category_id']);
+
+            $dataQuery->whereIn('category_id', $categoryIds);
         }
 
-        // Retorna a paginação com os filtros aplicados
+        if ($query && isset($query['price'])) {
+            $dataQuery->where('price', '<=', $query['price']);
+        }
+
         return $dataQuery->paginate($perPage);
     }
 

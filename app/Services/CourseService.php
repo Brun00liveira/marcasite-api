@@ -15,7 +15,7 @@ class CourseService
     {
         $this->courseRepository = $courseRepository;
     }
-    public function getAllCourses(int $perPage = 10, $query = null): LengthAwarePaginator
+    public function getAllCourses(int $perPage = 6, $query = null): LengthAwarePaginator
     {
         return $this->courseRepository->getAll($perPage, $query);
     }
