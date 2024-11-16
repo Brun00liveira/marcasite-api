@@ -72,7 +72,7 @@ class CourseController extends Controller
 
         if ($course && $course->photo) {
             $oldPhotoPath = $course->photo;
-            dd($oldPhotoPath);
+
             if (Storage::exists($oldPhotoPath)) {
                 Storage::delete($oldPhotoPath);
             }

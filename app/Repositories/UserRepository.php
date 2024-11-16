@@ -15,9 +15,15 @@ class UserRepository
         $this->user = $user;
     }
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator
+    public function getAll(int $perPage = 10, $query = null): LengthAwarePaginator| Collection
     {
-        return $this->user->paginate($perPage);
+        $dataQuery = $this->user->newQuery();
+
+        if ($query && isset($query['page'])) {
+            return $dataQuery->paginate($perPage);
+        }
+
+        return $this->user->get();
     }
 
 

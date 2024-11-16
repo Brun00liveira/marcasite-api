@@ -17,9 +17,9 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
-    public function getAllUsers(int $perPage = 10, int $page = 1): LengthAwarePaginator
+    public function getAllUsers(int $perPage = 10,  $query = null): LengthAwarePaginator | Collection
     {
-        return $this->userRepository->getAll($perPage, $page);
+        return $this->userRepository->getAll($perPage, $query);
     }
 
 

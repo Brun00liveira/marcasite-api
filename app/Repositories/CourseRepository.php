@@ -15,7 +15,7 @@ class CourseRepository
         $this->course = $course;
     }
 
-    public function getAll(int $perPage = 6, $query = null): LengthAwarePaginator
+    public function getAll(int $perPage = 6, $query = null): LengthAwarePaginator | Collection
     {
 
         $dataQuery = $this->course->newQuery();
@@ -34,8 +34,10 @@ class CourseRepository
         if ($query && isset($query['price'])) {
             $dataQuery->where('price', '<=', $query['price']);
         }
-
-        return $dataQuery->paginate($perPage);
+        if ($query && isset($query['page'])) {
+            return $dataQuery->paginate($perPage);
+        }
+        return $this->course->get();
     }
 
 

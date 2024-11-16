@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     RolePermissionController,
     CourseController,
     CategoryController,
+    DashboardController,
     EnrollmentController,
     ExportController
 };
@@ -54,7 +55,7 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
 
     Route::resource('categories', CategoryController::class)->only(['index', 'show']);
     Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
-    Route::get('enrollmentsByUserId', [EnrollmentController::class, 'findByUserId']);
+    Route::get('/dashboard', [DashboardController::class, 'getDashboardData']);
 });
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);
