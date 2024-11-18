@@ -32,7 +32,7 @@ class CustomerAsaasRepository
 
     public function findByUserId(): Customer
     {
-        return $this->customer->findOrFail(Auth::user()->id);
+        return $this->customer->where('user_id', Auth::user()->id)->first();
     }
 
     public function findByAsaasId(string $asaasId): Customer

@@ -8,7 +8,7 @@ use App\Services\SubscriptionService;
 
 class SubscriptionController extends Controller
 {
-    protected $subscriptionService;
+    protected SubscriptionService $subscriptionService;
 
     public function __construct(SubscriptionService $subscriptionService)
     {
@@ -17,36 +17,33 @@ class SubscriptionController extends Controller
 
     public function asaasWebhook(Request $request)
     {
-        // Obtém todos os dados do corpo da requisição
         $body = $request->all();
 
-        // Verifica o tipo de evento
-        switch ($body['event']) {
-            case 'PAYMENT_CREATED':
-                $payment = $body['payment'];
-                $this->createPayment($payment);
-                break;
-            case 'PAYMENT_RECEIVED':
-                $payment = $body['payment'];
-                $this->receivePayment($payment);
-                break;
-                // ... Adicione mais casos de eventos conforme necessário
-            default:
-                Log::info('Este evento não é aceito: ' . $body['event']);
+        // Verifica se o campo 'event' e 'payment' estão presentes
+        if (!isset($body['event'], $body['payment'])) {
+            Log::warning('Webhook recebido com dados incompletos', $body);
+            return response()->json(['error' => 'Dados inválidos'], 400);
         }
 
-        // Retorna uma resposta de confirmação
-        return response()->json($payment);
-    }
+        $event = $body['event'];
+        $payment = $body['payment'];
 
-    private function createPayment($payment)
-    {
-        return $this->subscriptionService->createPayment($payment);
-    }
+        // Lista de eventos aceitos
+        $acceptedEvents = [
+            'PAYMENT_CREATED',
+            'PAYMENT_RECEIVED',
+            'PAYMENT_CONFIRMED',
+        ];
 
-    // Função para tratar o evento PAYMENT_RECEIVED
-    private function receivePayment($payment)
-    {
-        return $this->subscriptionService->receivePayment($payment);
+        if (in_array($event, $acceptedEvents)) {
+            $result = $this->subscriptionService->createOrUpdatePayment($payment, $event);
+            if ($result) {
+                return response()->json(['message' => 'Pagamento processado com sucesso'], 200);
+            }
+            return response()->json(['error' => 'Falha ao processar pagamento'], 500);
+        }
+
+        Log::info('Evento não aceito: ' . $event);
+        return response()->json(['message' => 'Evento ignorado'], 200);
     }
 }

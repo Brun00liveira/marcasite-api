@@ -65,4 +65,4 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
 });
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);
-Route::post('/asaas/webhook', [SubscriptionController::class, 'asaasWebhook']);
+Route::post('asaas/webhook', [SubscriptionController::class, 'asaasWebhook']);

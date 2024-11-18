@@ -23,7 +23,8 @@ class PaymentAsaasService
 
     public function createPayment(array $data): Payment
     {
-        $customers = $this->customerAsaasRepository->findById(Auth::user()->id);
+        $customers = $this->customerAsaasRepository->findByUserId(Auth::user()->id);
+
         $data['customer'] = $customers['asaas_id'];
         $paymentData = $this->asaasIntegration->createPayment($data);
 
