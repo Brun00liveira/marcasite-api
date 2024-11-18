@@ -8,7 +8,7 @@ use App\Services\CustomerAsaasService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AsaasController extends Controller
+class CustomersAsaasController extends Controller
 {
     protected $customerAsaas;
 
@@ -24,11 +24,10 @@ class AsaasController extends Controller
     }
 
 
-    public function store(CreateCustomerRequest $request): JsonResponse
+    public function store(): JsonResponse
     {
-        $validatedData = $request->validated();
 
-        $response = $this->customerAsaas->createCustomer($validatedData);
+        $response = $this->customerAsaas->createCustomer();
 
         if (isset($response['error']) && $response['error']) {
             return response()->json(['error' => $response['message']], 400);

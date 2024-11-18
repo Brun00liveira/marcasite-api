@@ -10,17 +10,14 @@ class Customer extends Model
     use HasFactory;
     protected $fillable = [
         'asaas_id',
-        'name',
-        'email',
-        'phone',
-        'cpfCnpj',
-        'postal_code',
-        'address',
-        'address_number',
-        'complement',
-        'province'
+        'user_id'
     ];
 
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

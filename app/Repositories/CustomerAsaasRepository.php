@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerAsaasRepository
 {
@@ -21,12 +22,17 @@ class CustomerAsaasRepository
 
     public function getAll(): Collection
     {
-        return $this->customer->get();
+        return $this->customer->with("user")->get();
     }
 
     public function findById(int $id): Customer
     {
         return $this->customer->findOrFail($id);
+    }
+
+    public function findByUserId(): Customer
+    {
+        return $this->customer->findOrFail(Auth::user()->id);
     }
 
     public function findByAsaasId(string $asaasId): Customer

@@ -51,21 +51,21 @@ class AsaasIntegration
             'message' => $response->body(),
         ];
     }
-    //não vou usar, pois não sei o impacto que é deletar uma conta do asaas, não sei se é softdelete
 
-    public function deleteCustomer(string $asaasId): array
+    public function createPayment(array $data): array
     {
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'access_token' => $this->accessToken,
-        ])->delete("{$this->apiUrl}customers/" . $asaasId);
+        ])->post("{$this->apiUrl}/payments", $data);
 
         if ($response->successful()) {
-            return $response->json();
+            return $response->json();  // Retorna o pagamento criado com sucesso
         }
 
+        // Caso haja erro
         return [
             'error' => true,
             'message' => $response->body(),
