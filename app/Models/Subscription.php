@@ -9,12 +9,13 @@ class Subscription extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'asaas_id',
+        'payment_id',
         'customer_id',
         'billing_type',
         'value',
-        'cycle',
-        'status'
+        'status',
+        'due_date',
+        'payment_date',
     ];
 
     protected $keyType = 'string';

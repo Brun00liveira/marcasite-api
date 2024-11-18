@@ -38,7 +38,7 @@ class CustomerAsaasRepository
     public function findByAsaasId(string $asaasId): Customer
     {
 
-        return $this->customer->where('asaas_id', $asaasId)->firstOrFail();
+        return $this->customer->where('asaas_id', $asaasId)->first();
     }
 
     public function update(Customer $customer, array $data): Customer
