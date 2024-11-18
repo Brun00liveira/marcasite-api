@@ -36,7 +36,7 @@ class User extends Authenticatable
         'cep',
         'birth_date',
         'remember_token',
-        
+
     ];
 
     /**
@@ -67,8 +67,13 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class);
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function customer()
     {
-        return $this->hasOne(Customer::class); 
+        return $this->hasOne(Customer::class);
     }
 }

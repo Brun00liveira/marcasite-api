@@ -37,8 +37,8 @@ class DashboardService
         $subscription = $this->subscriptionRepository->getCountData();
         $courses = $this->courseRepository->countCourses();
         $users = $this->userRepository->countUser();
-        $enrollment = $this->enrollmentRepository->countEnrollmet();
-        $mergedData = array_merge($subscription, $courses, $users, $enrollment);
+        $enrollment = $this->enrollmentRepository->countEnrollment();
+        $mergedData = array_merge($subscription,  $users, $courses, $enrollment);
 
         return $mergedData;
     }
