@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StandardResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\SubscriptionService;
@@ -49,8 +50,12 @@ class SubscriptionController extends Controller
         return response()->json(['message' => 'Evento ignorado'], 200);
     }
 
-    public function index()
+    public function index(Request $request): StandardResource
     {
-        return $this->subscriptionService->findAll();
+        $perPage = $request->query('perPage', 6);
+
+        $courses = $this->subscriptionService->getAllSubscriptions($perPage, $request->all());
+
+        return new StandardResource($courses);
     }
 }

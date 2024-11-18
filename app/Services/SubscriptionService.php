@@ -7,6 +7,7 @@ use App\Repositories\SubscriptionRepository;
 use App\Repositories\CustomerAsaasRepository;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
 class SubscriptionService
@@ -59,9 +60,8 @@ class SubscriptionService
         }
     }
 
-    public function findAll(): Collection
+    public function getAllSubscriptions(int $perPage = 6, $query = null): Collection|LengthAwarePaginator
     {
-        return $this->subscriptionRepository->getAll();
+        return $this->subscriptionRepository->getAll($perPage, $query);
     }
-   
 }
