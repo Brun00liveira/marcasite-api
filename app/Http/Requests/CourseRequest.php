@@ -18,13 +18,15 @@ class CourseRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'is_active' => 'nullable'
+            'is_active' => 'nullable',
+            'category_id' => 'nullable|exists:categories,id',
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['title'] = 'nullable|string|max:255';
             $rules['description'] = 'nullable|string';
             $rules['price'] = 'nullable|numeric';
+            $rules['category_id'] = 'nullable|numeric';
         }
 
         return $rules;
@@ -43,6 +45,8 @@ class CourseRequest extends FormRequest
 
             'photo.image' => 'A foto deve ser uma imagem.',
             'photo.max' => 'A foto não pode ultrapassar 2MB.',
+
+            'category_id.exists' => 'O "category_id" informado não é válido. Verifique se o ID existe na tabela de categorias.',
         ];
     }
 }

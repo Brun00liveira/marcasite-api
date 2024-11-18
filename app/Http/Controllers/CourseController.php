@@ -51,6 +51,7 @@ class CourseController extends Controller
             'description' => $request->validated()['description'],
             'price' => $request->validated()['price'],
             'photo' => $url,
+            'category_id' => $request->validated()['category_id']
         ]);
 
         return new StandardResource($course);

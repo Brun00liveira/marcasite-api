@@ -22,7 +22,6 @@ class UserService
         return $this->userRepository->getAll($perPage, $query);
     }
 
-
     public function getUserById(int $id): ?User
     {
         return $this->userRepository->findById($id);
