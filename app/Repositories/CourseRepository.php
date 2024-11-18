@@ -91,7 +91,7 @@ class CourseRepository
         $series = $enrollmentsPerCategory->values();
 
         return [
-            'coursesQuatity' => $this->course->count(),
+            'coursesQuantity' => $this->course->count(),
             'labelsCategory' => $labels,
             'seriesCategory' => $series,
         ];

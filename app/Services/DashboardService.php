@@ -33,13 +33,15 @@ class DashboardService
 
     public function getDashboardData()
     {
-
         $subscription = $this->subscriptionRepository->getCountData();
         $courses = $this->courseRepository->countCourses();
         $users = $this->userRepository->countUser();
         $enrollment = $this->enrollmentRepository->countEnrollment();
-        $mergedData = array_merge($subscription,  $users, $courses, $enrollment);
 
-        return $mergedData;
+        $mergedData = array_merge($subscription, $users, $courses, $enrollment);
+
+        return [
+            'data' => $mergedData
+        ];
     }
 }
