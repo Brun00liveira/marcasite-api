@@ -21,6 +21,7 @@ class CategoryRepository
 
     public function findById($id): ?Category
     {
+
         return $this->category->find($id);
     }
 

@@ -42,6 +42,7 @@ class CategoryService
     public function deleteUser(int $id): bool
     {
         $user = $this->categoryRepository->findById($id);
+
         return $this->categoryRepository->delete($user);
     }
 }
