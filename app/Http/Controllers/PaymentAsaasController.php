@@ -17,7 +17,6 @@ class PaymentAsaasController extends Controller
 
     public function store(CreatePaymentRequest $request): JsonResponse
     {
-        dd($request);
         try {
             $paymentData = $this->paymentAsaasService->createPayment($request->validated());
 

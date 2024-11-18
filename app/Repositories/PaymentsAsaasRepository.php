@@ -17,7 +17,7 @@ class PaymentsAsaasRepository
 
     public function create(array $data): Payment
     {
-        // Criar pagamento no banco
+
         return $this->payment->create($data);
     }
 }

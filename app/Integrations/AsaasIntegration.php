@@ -2,6 +2,7 @@
 
 namespace App\Integrations;
 
+use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Support\Facades\Http;
 
 class AsaasIntegration
@@ -52,23 +53,24 @@ class AsaasIntegration
         ];
     }
 
-    public function createPayment(array $data): array
+    public function createPayment(array $data): ClientResponse
     {
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'access_token' => $this->accessToken,
-        ])->post("{$this->apiUrl}/payments", $data);
+        ])->post("{$this->apiUrl}payments", $data);
 
         if ($response->successful()) {
-            return $response->json();  // Retorna o pagamento criado com sucesso
+
+            return $response;
         }
 
         // Caso haja erro
         return [
             'error' => true,
-            'message' => $response->body(),
+            'message' => $response,
         ];
     }
 }

@@ -4,35 +4,41 @@ namespace App\Services;
 
 use App\Integrations\AsaasIntegration;
 use App\Repositories\PaymentsAsaasRepository;
+use App\Repositories\CustomerAsaasRepository;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentAsaasService
 {
-    protected $asaasIntegration;
-    protected $paymentsAsaasRepository;
+    protected AsaasIntegration $asaasIntegration;
+    protected PaymentsAsaasRepository $paymentsAsaasRepository;
+    protected CustomerAsaasRepository $customerAsaasRepository;
 
-    public function __construct(AsaasIntegration $asaasIntegration, PaymentsAsaasRepository $paymentsAsaasRepository)
+    public function __construct(AsaasIntegration $asaasIntegration, PaymentsAsaasRepository $paymentsAsaasRepository, CustomerAsaasRepository $customerAsaasRepository)
     {
         $this->asaasIntegration = $asaasIntegration;
         $this->paymentsAsaasRepository = $paymentsAsaasRepository;
+        $this->customerAsaasRepository = $customerAsaasRepository;
     }
 
     public function createPayment(array $data): Payment
-    {   
-        $this->CustomerAsaasService->
+    {
+        $customers = $this->customerAsaasRepository->findById(Auth::user()->id);
+        $data['customer'] = $customers['asaas_id'];
         $paymentData = $this->asaasIntegration->createPayment($data);
-        dd($paymentData);
-        // Se o pagamento foi criado com sucesso no Asaas, armazena no banco
-        if (isset($paymentData['error']) && $paymentData['error'] === false) {
-            return $this->paymentsAsaasRepository->create([
-                'payment_id' => $paymentData['id'],  // Exemplo: ID retornado pela API do Asaas
-                'value' => $paymentData['value'],
-                'status' => $paymentData['status'],
-                // Outras informações que você deseja armazenar
-            ]);
-        }
 
-        // Se houve erro ao criar o pagamento, você pode lançar uma exceção ou retornar um erro.
+
+        return $this->paymentsAsaasRepository->create([
+            'asaas_id' =>  $data['customer'],
+            'customer_id' => $customers['id'],
+            'value' => $paymentData['value'],
+            'status' => $paymentData['status'],
+            'billing_type' => $paymentData['billingType'],
+            'due_date' => $paymentData['originalDueDate'],
+            'description' => $paymentData['description']
+        ]);
+
+
         throw new \Exception($paymentData['message']);
     }
 }
