@@ -11,7 +11,8 @@ use App\Http\Controllers\{
     CategoryController,
     DashboardController,
     EnrollmentController,
-    ExportController
+    ExportController,
+    AsaasController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         'courses' => CourseController::class,
         'categories' => CategoryController::class,
         'enrollments' => EnrollmentController::class,
+        'customers' => AsaasController::class
     ]);
 });
 
@@ -56,6 +58,7 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
     Route::resource('categories', CategoryController::class)->only(['index', 'show']);
     Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
     Route::get('/dashboard', [DashboardController::class, 'getDashboardData']);
+    Route::resource('customers', AsaasController::class)->except(['destroy']);
 });
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);
