@@ -14,6 +14,7 @@ use App\Http\Controllers\{
     ExportController,
     CustomersAsaasController,
     PaymentAsaasController,
+    PlanController,
     SubscriptionController,
 };
 
@@ -46,7 +47,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         'courses' => CourseController::class,
         'categories' => CategoryController::class,
         'enrollments' => EnrollmentController::class,
-        'customers' => CustomersAsaasController::class
+        'customers' => CustomersAsaasController::class,
+        'plans' => PlanController::class
     ]);
 });
 
@@ -63,6 +65,7 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
     Route::resource('customers', CustomersAsaasController::class)->except(['destroy']);
     Route::resource('payment', PaymentAsaasController::class)->except(['destroy']);
     Route::resource('subscription', SubscriptionController::class)->except(['destroy']);
+    Route::resource('plans', PlanController::class)->except(['destroy']);
 });
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);
