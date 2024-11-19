@@ -54,7 +54,14 @@ class SubscriptionController extends Controller
     {
         $perPage = $request->query('perPage', 6);
 
-        $courses = $this->subscriptionService->getAllSubscriptions($perPage, $request->all());
+        $subscription = $this->subscriptionService->getAllSubscriptions($perPage, $request->all());
+
+        return new StandardResource($subscription);
+    }
+
+    public function findByUserId(): StandardResource
+    {
+        $courses = $this->subscriptionService->getByUserId();
 
         return new StandardResource($courses);
     }

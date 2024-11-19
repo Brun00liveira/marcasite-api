@@ -10,6 +10,7 @@ class Subscription extends Model
     use HasFactory;
     protected $fillable = [
         'payment_id',
+        'plan_id',
         'customer_id',
         'billing_type',
         'value',
@@ -24,5 +25,10 @@ class Subscription extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
     }
 }

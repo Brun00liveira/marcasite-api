@@ -66,6 +66,7 @@ Route::middleware(['auth:sanctum', 'role:user|admin'])->group(function () {
     Route::resource('payment', PaymentAsaasController::class)->except(['destroy']);
     Route::resource('subscription', SubscriptionController::class)->except(['destroy']);
     Route::resource('plans', PlanController::class)->except(['destroy']);
+    Route::get('/finbyUserId', [SubscriptionController::class, 'findByUserId']);
 });
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);

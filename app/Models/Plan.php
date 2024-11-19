@@ -15,4 +15,9 @@ class Plan extends Model
         'description',
         'price',
     ];
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

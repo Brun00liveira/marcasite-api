@@ -20,7 +20,13 @@ class PlansRepository
     // Método para pegar todos os planos, retorna uma Collection de Plan
     public function all(): Collection
     {
-        return $this->plan->all();
+        return $this->plan
+            ->with([
+                'subscriptions.customer.user' => function ($query) {
+                    $query->select('id', 'name', 'email'); // Ajuste os campos conforme necessário
+                }
+            ])
+            ->get();
     }
 
     // Método para encontrar um plano por ID, pode retornar um objeto Plan ou null

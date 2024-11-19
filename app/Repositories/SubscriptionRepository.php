@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Support\Facades\Auth;
 use Nette\Utils\Arrays;
 
 class SubscriptionRepository
@@ -58,6 +59,22 @@ class SubscriptionRepository
         // Otherwise, return all records (non-paginated)
         return $dataQuery->get();
     }
+
+    public function getByUserId(): Collection
+    {
+
+        $userId = Auth::id();
+
+        $dataQuery = $this->subscription->with('customer.user.enrollments', 'plan');
+
+        $dataQuery->whereHas('customer.user', function ($userQuery) use ($userId) {
+            $userQuery->where('id', $userId);
+        });
+
+        // Otherwise, return all records (non-paginated)
+        return $dataQuery->get();
+    }
+
 
 
 

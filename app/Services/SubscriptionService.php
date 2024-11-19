@@ -64,4 +64,9 @@ class SubscriptionService
     {
         return $this->subscriptionRepository->getAll();
     }
+
+    public function getByUserId()
+    {
+        return $this->subscriptionRepository->getByUserId();
+    }
 }
