@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Ramsey\Uuid\Type\Integer;
 
 class CourseRepository
 {
@@ -60,5 +61,14 @@ class CourseRepository
     public function delete(Course $course): bool
     {
         return $course->delete();
+    }
+
+    public function countCourses(): array
+    {
+        $data =  $this->course->count();
+
+        return [
+            'coursesQuatity' => $data
+        ];
     }
 }

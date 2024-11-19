@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\SubscriptionService;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 class SubscriptionController extends Controller
 {
@@ -15,7 +17,7 @@ class SubscriptionController extends Controller
         $this->subscriptionService = $subscriptionService;
     }
 
-    public function asaasWebhook(Request $request)
+    public function asaasWebhook(Request $request): JsonResponse
     {
         $body = $request->all();
 
@@ -45,5 +47,10 @@ class SubscriptionController extends Controller
 
         Log::info('Evento não aceito: ' . $event);
         return response()->json(['message' => 'Evento ignorado'], 200);
+    }
+
+    public function index()
+    {
+        return $this->subscriptionService->findAll();
     }
 }

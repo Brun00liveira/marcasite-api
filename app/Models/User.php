@@ -36,6 +36,7 @@ class User extends Authenticatable
         'cep',
         'birth_date',
         'remember_token',
+        
     ];
 
     /**

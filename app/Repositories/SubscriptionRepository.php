@@ -4,6 +4,10 @@ namespace App\Repositories;
 
 
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection as SupportCollection;
+use Nette\Utils\Arrays;
 
 class SubscriptionRepository
 {
@@ -29,5 +33,23 @@ class SubscriptionRepository
     {
         $subscription->update($data);
         return $subscription;
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->subscription->with('customer.user')->get();
+    }
+
+    public function getCountData(): array
+    {
+        $data =  $this->subscription->with('customer.user')->get();
+        $paymentReceivedCount = $data->where('status', 'PAYMENT_RECEIVED')->count();
+        $paymentPedentCount = $this->subscription->where('status', '!=', 'PAYMENT_RECEIVED')->count();
+
+
+        return [
+            'paymentReceivedCount' => $paymentReceivedCount,
+            'paymentePedent' => $paymentPedentCount
+        ];
     }
 }

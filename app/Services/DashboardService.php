@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Repositories\CourseRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\EnrollmentRepository;
+use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
 
 class DashboardService
@@ -14,31 +15,31 @@ class DashboardService
     protected $categoryRepository;
     protected $enrollmentRepository;
     protected $userRepository;
+    protected $subscriptionRepository;
 
     public function __construct(
         CourseRepository $courseRepository,
         CategoryRepository $categoryRepository,
         EnrollmentRepository $enrollmentRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        SubscriptionRepository $subscriptionRepository
     ) {
         $this->courseRepository = $courseRepository;
         $this->categoryRepository = $categoryRepository;
         $this->enrollmentRepository = $enrollmentRepository;
         $this->userRepository = $userRepository;
+        $this->subscriptionRepository = $subscriptionRepository;
     }
 
     public function getDashboardData()
     {
-        $courses = $this->courseRepository->getAll();
-        $categories = $this->categoryRepository->getAll();
-        $totalEnrollments = $this->enrollmentRepository->getAll();
-        $totalUsers = $this->userRepository->getAll();
 
-        return [
-            'courses' => $courses,
-            'categories' => $categories,
-            'totalEnrollments' => $totalEnrollments,
-            'totalUsers' => $totalUsers,
-        ];
+        $subscription = $this->subscriptionRepository->getCountData();
+        $courses = $this->courseRepository->countCourses();
+        $users = $this->userRepository->countUser();
+        $enrollment = $this->enrollmentRepository->countEnrollmet();
+        $mergedData = array_merge($subscription, $courses, $users, $enrollment);
+
+        return $mergedData;
     }
 }

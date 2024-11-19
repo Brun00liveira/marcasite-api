@@ -48,4 +48,17 @@ class UserRepository
     {
         return $user->delete();
     }
+
+    public function countUser(): array
+    {
+        $users = $this->user->count();
+        $activeUser = $this->user->where('is_active', '1')->count();
+        $inativeUser = $this->user->where('is_active', '!=', '1')->count();
+
+        return [
+            'totalUsers' => $users,
+            'inativeUsers' => $inativeUser,
+            'activeUser' => $activeUser,
+        ];
+    }
 }

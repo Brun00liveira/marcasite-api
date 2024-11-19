@@ -6,6 +6,7 @@ use App\Integrations\AsaasIntegration;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\CustomerAsaasRepository;
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 class SubscriptionService
@@ -57,4 +58,10 @@ class SubscriptionService
             return null;
         }
     }
+
+    public function findAll(): Collection
+    {
+        return $this->subscriptionRepository->getAll();
+    }
+   
 }

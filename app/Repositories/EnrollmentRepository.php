@@ -54,4 +54,13 @@ class EnrollmentRepository
     {
         return $this->enrollment->where('course_id', $courseId)->get();
     }
+
+    public function countEnrollmet(): array
+    {
+        $data = $this->enrollment->count();
+
+        return [
+            'totalEnrollments' => $data
+        ];
+    }
 }
