@@ -39,7 +39,7 @@ class SubscriptionRepository
     public function getAll(int $perPage = 6, $query = null): LengthAwarePaginator | Collection
     {
         // Start the query on subscriptions
-        $dataQuery = $this->subscription->with('customer.user');
+        $dataQuery = $this->subscription->with('customer.user.enrollments');
 
         // Check if we have a search query for the user name
         if ($query && isset($query['name'])) {
@@ -50,8 +50,9 @@ class SubscriptionRepository
         }
 
         // If pagination is requested
-        if (isset($query['page'])) {
-            return $dataQuery->paginate($perPage); // Paginate results
+        if (isset($perPage)) {
+
+            return $dataQuery->paginate($perPage);
         }
 
         // Otherwise, return all records (non-paginated)

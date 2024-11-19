@@ -60,8 +60,8 @@ class SubscriptionService
         }
     }
 
-    public function getAllSubscriptions(int $perPage = 6, $query = null): Collection|LengthAwarePaginator
+    public function getAllSubscriptions(): Collection|LengthAwarePaginator
     {
-        return $this->subscriptionRepository->getAll($perPage, $query);
+        return $this->subscriptionRepository->getAll();
     }
 }

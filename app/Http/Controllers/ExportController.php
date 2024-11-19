@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Exports\UsersExports;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
-use App\Services\UserService;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class ExportController extends Controller
 {
-    protected $userService;
+    protected $subscriptionService;
 
-    public function __construct(UserService $userService)
+    public function __construct(SubscriptionService $subscriptionService)
     {
-        $this->userService = $userService;
+        $this->subscriptionService = $subscriptionService;
     }
 
     public function export(Request $request)
@@ -24,7 +24,7 @@ class ExportController extends Controller
         $perPage = $request->query('perPage', 10);
         $page = $request->query('page', 1);
 
-        $users = $this->userService->getAllUsers($perPage, $page);
+        $users = $this->subscriptionService->getAllSubscriptions($perPage, $page);
 
 
         return Excel::download(new UsersExports($users), 'users.xlsx');
@@ -32,12 +32,10 @@ class ExportController extends Controller
 
     public function exportPdf(Request $request)
     {
-        $perPage = $request->query('perPage', 10);
-        $page = $request->query('page', 1);
 
-        $users = $this->userService->getAllUsers($perPage, $page);
+        $subscriptions = $this->subscriptionService->getAllSubscriptions();
 
-        $pdf = Pdf::loadView('pdf.exemplo', compact('users'));
+        $pdf = Pdf::loadView('pdf.subscribersPdf', compact('subscriptions'));
 
         return $pdf->download('relatorio_usuarios.pdf');
     }
