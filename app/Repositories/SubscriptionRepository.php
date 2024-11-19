@@ -42,10 +42,10 @@ class SubscriptionRepository
         $dataQuery = $this->subscription->with('customer.user');
 
         // Check if we have a search query for the user name
-        if ($query && isset($query['user_name'])) {
-            // Filter subscriptions by user name
+        if ($query && isset($query['name'])) {
+
             $dataQuery->whereHas('customer.user', function ($userQuery) use ($query) {
-                $userQuery->where('name', 'like', '%' . $query['user_name'] . '%');
+                $userQuery->where('name', 'like', '%' . $query['name'] . '%');
             });
         }
 
