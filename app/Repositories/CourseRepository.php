@@ -22,32 +22,30 @@ class CourseRepository
     public function getAll(int $perPage = 6, $query = null): LengthAwarePaginator | Collection
     {
 
-        $dataQuery = $this->course->newQuery();
+        $dataQuery = $this->course->newQuery()
+            ->with('category')
+            ->withCount('enrollments');
+
 
         if ($query && isset($query['name'])) {
             $dataQuery->where('title', 'like', '%' . $query['name'] . '%');
         }
 
         if ($query && isset($query['category_id'])) {
-
             $categoryIds = is_array($query['category_id']) ? $query['category_id'] : explode(',', $query['category_id']);
-
             $dataQuery->whereIn('category_id', $categoryIds);
         }
 
-        if ($query && isset($query['price'])) {
-            $dataQuery->where('price', '<=', $query['price']);
-        }
         if ($query && isset($query['page'])) {
             return $dataQuery->paginate($perPage);
         }
-        return $this->course->get();
-    }
 
+        return $dataQuery->get();
+    }
 
     public function findById($id): Course
     {
-        return $this->course->findOrFail($id);
+        return $this->course->with('category')->find($id);
     }
 
     public function create(array $data): Course

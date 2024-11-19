@@ -16,8 +16,6 @@ class CourseRequest extends FormRequest
         $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
-
             'is_active' => 'nullable',
             'category_id' => 'nullable|exists:categories,id',
         ];
@@ -25,7 +23,6 @@ class CourseRequest extends FormRequest
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['title'] = 'nullable|string|max:255';
             $rules['description'] = 'nullable|string';
-            $rules['price'] = 'nullable|numeric';
             $rules['category_id'] = 'nullable|numeric';
         }
 
@@ -40,8 +37,6 @@ class CourseRequest extends FormRequest
             'title.max' => 'O título deve ter no máximo 255 caracteres.',
 
             'description.required' => 'A descrição é obrigatória.',
-
-            'price.required' => 'O preço do curso é obrigatório.',
 
             'photo.image' => 'A foto deve ser uma imagem.',
             'photo.max' => 'A foto não pode ultrapassar 2MB.',

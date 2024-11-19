@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
+use App\Services\RolePermissionService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     protected $authService;
+    protected $rolePermissionService;
 
-    public function __construct(AuthService $authService)
+    public function __construct(AuthService $authService, RolePermissionService $rolePermissionService)
     {
         $this->authService = $authService;
+        $this->rolePermissionService = $rolePermissionService;
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -47,6 +50,8 @@ class AuthController extends Controller
         $user = $this->authService->create($request->all());
 
         $token = $user->createToken('Token')->plainTextToken;
+
+        $this->rolePermissionService->assignRoleToUser($user['id'], 'user');
 
         return response()->json([
             'user' => new UserResource($user),

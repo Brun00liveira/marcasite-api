@@ -49,7 +49,6 @@ class CourseController extends Controller
         $course = $this->courseService->createCourse([
             'title' => $request->validated()['title'],
             'description' => $request->validated()['description'],
-            'price' => $request->validated()['price'],
             'photo' => $url,
             'category_id' => $request->validated()['category_id']
         ]);

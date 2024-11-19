@@ -9,14 +9,10 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
-        'price',
+
         'photo',
         'category_id',
         'is_active'
-    ];
-
-    protected $casts = [
-        'price' => 'decimal:2',
     ];
 
     public function category()

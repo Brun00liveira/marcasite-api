@@ -18,8 +18,8 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'phone' => $this->phone
-
+            'phone' => $this->phone,
+            'role' => $this->roles->pluck('name'), // Retorna os nomes dos papéis
         ];
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -60,6 +61,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    // Verifica se o usuário é admin
+    public function isAdmin()
+    {
+        return $this->role && $this->role->name == 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role && $this->role->name == 'user';
     }
 
     public function enrollments()
