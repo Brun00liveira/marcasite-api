@@ -20,6 +20,9 @@ class UserRepository
         // Inicia a consulta com as relações
         $dataQuery = $this->user->newQuery()->with('customer.subscription');
 
+        if ($query && isset($query['name'])) {
+            $dataQuery->where('name', 'like', '%' . $query['name'] . '%');
+        }
         // Verifica se a consulta inclui uma página para paginação
         if ($query && isset($query['page'])) {
             return $dataQuery->paginate($perPage);  // Retorna a página com o número de registros por página
