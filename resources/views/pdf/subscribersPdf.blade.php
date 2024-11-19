@@ -32,7 +32,7 @@
                 <th>Telefone</th>
                 <th>Valor</th>
                 <th>Status</th>
-                <th>Vencimento</th>
+                <th>Pagamento</th>
             </tr>
         </thead>
         <tbody>
@@ -40,9 +40,9 @@
             <tr>
                 <td>{{ $item->customer->user->name }}</td>
                 <td>{{ $item->customer->user->phone }}</td>
-                <td>{{ $item->value }}</td>
+                <td>R$ {{ $item->value }}</td>
                 <td>{{ $item->status }}</td>
-                <td>{{ $item->due_date }}</td>
+                <td>{{ $item->billing_type }}</td>
             </tr>
             @endforeach
         </tbody>
