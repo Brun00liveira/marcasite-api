@@ -21,4 +21,8 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
+    }
 }

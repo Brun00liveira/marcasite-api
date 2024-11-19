@@ -15,15 +15,18 @@ class UserRepository
         $this->user = $user;
     }
 
-    public function getAll(int $perPage = 10, $query = null): LengthAwarePaginator| Collection
+    public function getAll(int $perPage = 10, $query = null): LengthAwarePaginator|Collection
     {
-        $dataQuery = $this->user->newQuery();
+        // Inicia a consulta com as relações
+        $dataQuery = $this->user->newQuery()->with('customer.subscription');
 
+        // Verifica se a consulta inclui uma página para paginação
         if ($query && isset($query['page'])) {
-            return $dataQuery->paginate($perPage);
+            return $dataQuery->paginate($perPage);  // Retorna a página com o número de registros por página
         }
 
-        return $this->user->get();
+        // Caso contrário, retorna todos os registros sem paginação
+        return $dataQuery->get();  // Usamos $dataQuery aqui para garantir que as relações sejam carregadas
     }
 
 

@@ -36,13 +36,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($subscriptions as $item)
+            @foreach ($users as $item)
+      
             <tr>
-                <td>{{ $item->customer->user->name }}</td>
-                <td>{{ $item->customer->user->phone }}</td>
-                <td>R$ {{ $item->value }}</td>
-                <td>{{ $item->status }}</td>
-                <td>{{ $item->billing_type }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->phone }}</td>
+                <td>R$ 
+                    {{ $item->customer ? $item->customer->subscription->value ?? '0' : '0' }}
+                </td>
+                <td>
+                    {{ $item->customer ? $item->customer->subscription->status ?? '' : '' }}
+                </td>
+                <td>
+                    {{ $item->customer ? $item->customer->subscription->due_date ?? '' : '' }}
+                </td>
             </tr>
             @endforeach
         </tbody>

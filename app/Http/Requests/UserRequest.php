@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'cpf' => 'required|string|max:255',
-            'phone' => ['required', 'regex:/^\+?\d{10,15}$/'],
+            'phone' => ['required'],
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
