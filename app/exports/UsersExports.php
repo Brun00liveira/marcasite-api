@@ -26,17 +26,17 @@ class UsersExports implements FromCollection, WithHeadings, WithStyles, ShouldAu
 
 
         foreach ($this->data as $item) {
+
             $data[] = [
-                $item->name,
-                $item->email,
-                $item->phone,
-                $item->cpf,
-                $item->birth_date,
-                $item->address,
-                $item->city,
-                $item->state,
-                $item->country,
-                $item->cep,
+                $item->customer->user->name,
+                $item->customer->user->email,
+                $item->customer->user->phone,
+                $item->customer->user->cpf,
+                $item->billing_type,
+                $item->value,
+                $item->due_date,
+                $item->status,
+
             ];
         }
 
@@ -50,12 +50,10 @@ class UsersExports implements FromCollection, WithHeadings, WithStyles, ShouldAu
             'E-mail',
             'Phone',
             'CPF',
-            'Data de Nascimento',
-            'Endereço',
-            'Cidade',
-            'Estado',
-            'Pais',
-            'CEP'
+            'Forma de Pagamento',
+            'Valor',
+            'Vencimento',
+            'status',
         ];
     }
 

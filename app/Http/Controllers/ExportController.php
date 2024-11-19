@@ -21,10 +21,7 @@ class ExportController extends Controller
 
     public function export(Request $request)
     {
-        $perPage = $request->query('perPage', 10);
-        $page = $request->query('page', 1);
-
-        $users = $this->subscriptionService->getAllSubscriptions($perPage, $page);
+        $users = $this->subscriptionService->getAllSubscriptions();
 
 
         return Excel::download(new UsersExports($users), 'users.xlsx');
