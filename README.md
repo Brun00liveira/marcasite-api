@@ -1,4 +1,5 @@
 ## MarcaSite Curso
+Cada processo que eu fiz foi feito em Branchs diferentes e quando finalizava eu mergei com a Main,para o caso queira ver algo especifico.</br>
 
 A API do projeto Marcasite Cursos é um sistema de gerenciamento de inscrições para cursos, desenvolvido em Laravel 11. O objetivo deste projeto é criar uma plataforma que permite gerenciar inscrições de alunos, integrar pagamentos online e fornecer um painel administrativo para controle e gestão de inscritos.
 
@@ -41,6 +42,7 @@ cd marcasite-cursos
 <strong>versão do npm:</strong>PHP 10.8.1<br/>
 <strong>versão do node:</strong> v20.15.0<br/>
 composer install </br>
+se der erro na instalação , verifique o alerta , deve ser algo do php.ini (extension:zip, gd, mysql , etc)</br>
 npm install
 
 <strong><h3>3. Configure o arquivo .env</h3></strong>
@@ -53,7 +55,7 @@ As demais alterações fiz direto nos diretórios da Config como por exemplo: FI
 php artisan migrate </br>
 php artisan db:seed </br>
 
-Após rodar o seed, um usuário administrador será criado! <br/>
+Após rodar o seed, um usuário administrador, cursos e categorias será criado! <br/>
 
 <strong>Login:</strong> admin@marcacurso.com <br/>
 <strong>Senha:</strong> SenhaForte123
