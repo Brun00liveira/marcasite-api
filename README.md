@@ -58,6 +58,15 @@ Após rodar o seed, um usuário administrador será criado! <br/>
 <strong>Login:</strong> admin@marcacurso.com <br/>
 <strong>Senha:</strong> SenhaForte123
 
+<strong><h3>4. Asaas</h3></strong>
+
+Para Utilizando os serviços do Asaas é necessario https, assim utilizei o ngrok. <br/>
+<br/>
+
+Variaveis do Env
+<strong>ASAAS_ENV:</strong> sandbox <br/>
+<strong>ASAAS_URL:</strong> https://sandbox.asaas.com/api/v3/
+
 
 
 
