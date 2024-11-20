@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EnrollmentRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class EnrollmentRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'course_id' => 'required|exists:courses,id',
+            'course_id' => [
+                'required',
+                'exists:courses,id',
+                Rule::unique('enrollments')->where(function ($query) {
+                    $query->where('user_id', auth()->id());
+                }),
+            ],
+
             'user_id' => 'required|exists:users,id',
             'status' => 'required|in:pending,active,completed,cancelled',
             'enrolled_at' => 'nullable|date',

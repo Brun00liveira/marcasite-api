@@ -23,7 +23,7 @@ class CourseRepository
     {
 
         $dataQuery = $this->course->newQuery()
-            ->with('category')
+            ->with('category', 'enrollments')
             ->withCount('enrollments');
 
 

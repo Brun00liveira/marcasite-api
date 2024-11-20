@@ -54,22 +54,21 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     ]);
 });
 
-// Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
-//     Route::resource('users', UserController::class)->except(['destroy']);
-//     Route::post('/users/updatePhoto/{id}', [UserController::class, 'updatePhoto']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('users', UserController::class)->except(['destroy']);
+    Route::post('/users/updatePhoto/{id}', [UserController::class, 'updatePhoto']);
+    Route::resource('courses', CourseController::class)->except(['destroy']);
+    Route::post('/courses/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
+    Route::resource('categories', CategoryController::class)->only(['index', 'show']);
+    Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
 
-//     Route::resource('courses', CourseController::class)->except(['destroy']);
-//     Route::post('/courses/updatePhoto/{id}', [CourseController::class, 'updatePhoto']);
-
-//     Route::resource('categories', CategoryController::class)->only(['index', 'show']);
-//     Route::resource('enrollments', EnrollmentController::class)->except(['destroy']);
-//     Route::get('/dashboard', [DashboardController::class, 'getDashboardData']);
-//     Route::resource('customers', CustomersAsaasController::class)->except(['destroy']);
-//     Route::resource('payment', PaymentAsaasController::class)->except(['destroy']);
-//     Route::resource('subscription', SubscriptionController::class)->except(['destroy']);
-//     Route::resource('plans', PlanController::class)->except(['destroy']);
-//     Route::get('/finbyUserId', [SubscriptionController::class, 'findByUserId']);
-// });
+    Route::resource('customers', CustomersAsaasController::class)->except(['destroy']);
+    Route::resource('payment', PaymentAsaasController::class)->except(['destroy']);
+    Route::resource('subscription', SubscriptionController::class)->except(['destroy']);
+    Route::resource('plans', PlanController::class)->except(['destroy']);
+    Route::get('/finbyUserId', [SubscriptionController::class, 'findByUserId']);
+    Route::get('/enrollmentsByUserId', [EnrollmentController::class, 'findByUserId']);
+});
 Route::get('/export', [ExportController::class, 'export']);
 Route::get('/coursesExcel', [ExportController::class, 'exportCoursesExcel']);
 Route::get('/export-pdf', [ExportController::class, 'exportPdf']);

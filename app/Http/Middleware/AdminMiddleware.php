@@ -17,6 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+       
         // Verifica se o usuário tem o papel 'admin'
         if (Auth::user() && Auth::user()->hasRole('admin')) {
             return $next($request);
