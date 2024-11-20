@@ -47,4 +47,14 @@ class PlanService
     {
         return $this->plansRepository->delete($id);
     }
+
+    public function getPlanByValue(int $id): bool
+    {
+        return $this->plansRepository->delete($id);
+    }
+
+    public function findByValue(int $value): ?Plan
+    {
+        return $this->plansRepository->findByValue($value);
+    }
 }

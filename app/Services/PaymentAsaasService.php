@@ -13,10 +13,12 @@ class PaymentAsaasService
     protected AsaasIntegration $asaasIntegration;
     protected PaymentsAsaasRepository $paymentsAsaasRepository;
     protected CustomerAsaasRepository $customerAsaasRepository;
+    protected CustomerAsaasService $customerAsaasService;
 
-    public function __construct(AsaasIntegration $asaasIntegration, PaymentsAsaasRepository $paymentsAsaasRepository, CustomerAsaasRepository $customerAsaasRepository)
+    public function __construct(AsaasIntegration $asaasIntegration, PaymentsAsaasRepository $paymentsAsaasRepository, CustomerAsaasRepository $customerAsaasRepository, CustomerAsaasService $customerAsaasService)
     {
         $this->asaasIntegration = $asaasIntegration;
+        $this->customerAsaasService = $customerAsaasService;
         $this->paymentsAsaasRepository = $paymentsAsaasRepository;
         $this->customerAsaasRepository = $customerAsaasRepository;
     }
@@ -24,6 +26,10 @@ class PaymentAsaasService
     public function createPayment(array $data): Payment
     {
         $customers = $this->customerAsaasRepository->findByUserId(Auth::user()->id);
+        if ($customers == null) {
+            $this->customerAsaasService->createCustomer();
+            $customers = $this->customerAsaasRepository->findByUserId(Auth::user()->id);
+        }
 
         $data['customer'] = $customers['asaas_id'];
         $paymentData = $this->asaasIntegration->createPayment($data);

@@ -54,4 +54,11 @@ class PlansRepository
         $plan = $this->find($id);
         return $plan ? $plan->delete() : false;
     }
+
+    public function findByValue(float $value): ?Plan
+    {
+        return $this->plan->where('price', '>=', $value - 1) // preço maior ou igual a $value - 1
+            ->where('price', '<=', $value + 1) // preço menor ou igual a $value + 1
+            ->first();
+    }
 }

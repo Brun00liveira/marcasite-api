@@ -39,6 +39,7 @@ class SubscriptionController extends Controller
         ];
 
         if (in_array($event, $acceptedEvents)) {
+          
             $result = $this->subscriptionService->createOrUpdatePayment($payment, $event);
             if ($result) {
                 return response()->json(['message' => 'Pagamento processado com sucesso'], 200);

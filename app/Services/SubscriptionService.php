@@ -15,15 +15,18 @@ class SubscriptionService
     protected AsaasIntegration $asaasIntegration;
     protected SubscriptionRepository $subscriptionRepository;
     protected CustomerAsaasRepository $customerAsaasRepository;
+    protected PlanService $planService;
 
     public function __construct(
         AsaasIntegration $asaasIntegration,
         SubscriptionRepository $subscriptionRepository,
-        CustomerAsaasRepository $customerAsaasRepository
+        CustomerAsaasRepository $customerAsaasRepository,
+        PlanService $planService
     ) {
         $this->asaasIntegration = $asaasIntegration;
         $this->subscriptionRepository = $subscriptionRepository;
         $this->customerAsaasRepository = $customerAsaasRepository;
+        $this->planService = $planService;
     }
 
     public function createOrUpdatePayment(array $data, string $event): ?Subscription
@@ -36,13 +39,17 @@ class SubscriptionService
             $customer = $this->customerAsaasRepository->findByAsaasId($data['customer']);
 
             if (!$customer) {
+
                 Log::error("Cliente não encontrado para o Asaas ID: {$data['customer']}");
                 return null;
             }
 
+            $plan = $this->planService->findByValue($data['value']);
+
             $payload = [
                 'payment_id' => $data['id'],
                 'customer_id' => $customer->id,
+                'plan_id' => $plan['id'],
                 'billing_type' => $data['billingType'],
                 'value' => $data['value'],
                 'status' => $event,

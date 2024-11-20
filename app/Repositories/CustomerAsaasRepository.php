@@ -30,12 +30,14 @@ class CustomerAsaasRepository
         return $this->customer->findOrFail($id);
     }
 
-    public function findByUserId(): Customer
+    public function findByUserId(): Customer | null
     {
-        return $this->customer->where('user_id', Auth::user()->id)->first();
+        $customer = $this->customer->where('user_id', Auth::user()->id)->first();
+
+        return $customer;
     }
 
-    public function findByAsaasId(string $asaasId): Customer
+    public function findByAsaasId(string $asaasId): ?Customer
     {
 
         return $this->customer->where('asaas_id', $asaasId)->first();
