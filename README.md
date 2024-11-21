@@ -1,6 +1,12 @@
 ## MarcaSite Curso
 Cada processo que eu fiz foi feito em Branchs diferentes e quando finalizava eu mergei com a Main,para o caso queira ver algo especifico.</br>
 
+## Link do video Fiz um video Rapido sem som só pra caso queira ver o funcionamento
+
+Login com Usuário https://www.youtube.com/watch?v=a7BuVqGdX6M
+
+Login com Admin https://www.youtube.com/watch?v=NYUKBFWkD60
+
 A API do projeto Marcasite Cursos é um sistema de gerenciamento de inscrições para cursos, desenvolvido em Laravel 11. O objetivo deste projeto é criar uma plataforma que permite gerenciar inscrições de alunos, integrar pagamentos online e fornecer um painel administrativo para controle e gestão de inscritos.
 
 ## Visão Geral do Projeto
